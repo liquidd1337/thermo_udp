@@ -10,16 +10,14 @@ struct SmatrThermo {
     themperature: f32,
 }
 impl SmatrThermo {
-    fn generate_temperature(&mut self) -> f32 {
-        let rand: f32 = thread_rng().gen_range(0.0..=1.0);
-        if rand <= 0.5 {
-                self.themperature = 20.0 + (rand).sin();
-                return self.themperature
-            } else {
-                self.themperature = 20.0 - (rand/2.0).sin();
-                return self.themperature
-            }
-        }
+       fn generate_temperature(&mut self) -> f32 {
+           let rand: f32 = thread_rng().gen_range(0.0..=1.0);
+           self.themperature = match rand <= 0.5 {
+               true => 20.0 + rand.sin(),
+               false => 20.0 - (rand / 2.0).sin(),
+           };
+           self.themperature
+       }
 }
 
 fn main() {
